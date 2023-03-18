@@ -67,11 +67,11 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 										<tr>
 											<th>Sno.</th>
 											<th>Student Name</th>
-											<th>Reg no</th>
+											<th>Matric no</th>
 											<th>Contact no </th>
 											<th>room no  </th>
-											<th>Seater </th>
-											<th>Staying From </th>
+											<th>Bed Space </th>
+											<th>Resumption</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -79,11 +79,11 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 										<tr>
 											<th>Sno.</th>
 											<th>Student Name</th>
-											<th>Reg no</th>
+											<th>Matric no</th>
 											<th>Contact no </th>
 											<th>Room no  </th>
-											<th>Seater </th>
-											<th>Staying From </th>
+											<th>Bed Space </th>
+											<th>Resumpton </th>
 											<th>Action</th>
 										</tr>
 									</tfoot>

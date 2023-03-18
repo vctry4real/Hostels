@@ -27,7 +27,7 @@ echo"<script>alert('Course has been added successfully');</script>";
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Add Courses</title>
+	<title>Add Department</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
@@ -49,23 +49,23 @@ echo"<script>alert('Course has been added successfully');</script>";
 				<div class="row">
 					<div class="col-md-12">
 					
-						<h2 class="page-title">Add Courses </h2>
+						<h2 class="page-title">Add Course </h2>
 	
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
-									<div class="panel-heading">Add courses</div>
+									<div class="panel-heading">Add Course</div>
 									<div class="panel-body">
 										<form method="post" class="form-horizontal">
 											
 											<div class="hr-dashed"></div>
-											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Code </label>
+											<!--<div class="form-group">
+												<label class="col-sm-2 control-label">Department </label>
 												<div class="col-sm-8">
 													<input type="text" value="" name="cc"  class="form-control"> </div>
-											</div>
+											</div>-->
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Name (Short)</label>
+												<label class="col-sm-2 control-label">Course name (Short)</label>
 												<div class="col-sm-8">
 	<input type="text" class="form-control" name="cns" id="cns" value="" required="required">
 						 

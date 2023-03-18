@@ -70,10 +70,10 @@ echo"<script>alert('Course has been Updated successfully');</script>";
 	  	?>
 						<div class="hr-dashed"></div>
 						<div class="form-group">
-						<label class="col-sm-2 control-label">Course Code </label>
+						<!--<label class="col-sm-2 control-label">Course Code </label>
 					<div class="col-sm-8">
 					<input type="text"  name="cc" value="<?php echo $row->course_code;?>"  class="form-control"> </div>
-					</div>
+					</div>-->
 				 <div class="form-group">
 				<label class="col-sm-2 control-label">Course Name (Short)</label>
 		<div class="col-sm-8">

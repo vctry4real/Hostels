@@ -69,7 +69,7 @@ echo"<script>alert('Room Details has been Updated successfully');</script>";
 	  	?>
 						<div class="hr-dashed"></div>
 						<div class="form-group">
-						<label class="col-sm-2 control-label">Seater  </label>
+						<label class="col-sm-2 control-label">Bed Space  </label>
 					<div class="col-sm-8">
 					<input type="text"  name="seater" value="<?php echo $row->seater;?>"  class="form-control"> </div>
 					</div>
@@ -82,7 +82,7 @@ echo"<script>alert('Room Details has been Updated successfully');</script>";
 						 </div>
 						</div>
 <div class="form-group">
-									<label class="col-sm-2 control-label">Fees (PM) </label>
+									<label class="col-sm-2 control-label">Room Fee </label>
 									<div class="col-sm-8">
 									<input type="text" class="form-control" name="fees" value="<?php echo $row->fees;?>" >
 												</div>

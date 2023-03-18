@@ -75,15 +75,15 @@ echo"<script>alert('Room has been added successfully');</script>";
 											
 											<div class="hr-dashed"></div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Select Seater  </label>
+												<label class="col-sm-2 control-label">Select Bed Space  </label>
 												<div class="col-sm-8">
 												<Select name="seater" class="form-control" required>
-<option value="">Select Seater</option>
-<option value="1">Single Seater</option>
-<option value="2">Two Seater</option>
-<option value="3">Three Seater</option>
-<option value="4">Four Seater</option>
-<option value="5">Five Seater</option>
+<option value="">Select Bed Space</option>
+<option value="1">Single Bed Space</option>
+<option value="2">Two Bed Space</option>
+<option value="3">Three Bed Space</option>
+<option value="4">Four Bed Space</option>
+<option value="5">Five Bed Space</option>
 </Select>
 </div>
 </div>
@@ -94,7 +94,7 @@ echo"<script>alert('Room has been added successfully');</script>";
 </div>
 </div>
 <div class="form-group">
-<label class="col-sm-2 control-label">Fee(Per Student)</label>
+<label class="col-sm-2 control-label">Room Fee</label>
 <div class="col-sm-8">
 <input type="text" class="form-control" name="fee" id="fee" value="" required="required">
 </div>

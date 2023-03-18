@@ -41,7 +41,7 @@ echo"<script>alert('Student Succssfully register');</script>";
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>User Registration</title>
+	<title>Sign up</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
@@ -88,9 +88,9 @@ return true;
 										
 
 <div class="form-group">
-<label class="col-sm-2 control-label"> Registration No : </label>
+<label class="col-sm-2 control-label"> Matriculation No : </label>
 <div class="col-sm-8">
-<input type="text" name="regno" id="regno"  class="form-control" required="required" onBlur="checkRegnoAvailability()">
+<input type="text" name="regno" id="regno"  class="form-control" onBlur="checkRegnoAvailability()">
 <span id="user-reg-availability" style="font-size:12px;"></span>
 </div>
 </div>

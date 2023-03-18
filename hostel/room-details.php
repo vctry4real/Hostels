@@ -75,7 +75,7 @@ while($row=$res->fetch_object())
 <td colspan="6" style="text-align:center; color:blue"><h3>Room Realted Info</h3></td>
 </tr>
 <tr>
-	<th>Registration Number :</th>
+	<th>Matriculation No. :</th>
 <td><?php echo $row->regno;?></td>
 <th>Apply Date :</th>
 <td colspan="3"><?php echo $row->postingDate;?></td>
@@ -86,13 +86,13 @@ while($row=$res->fetch_object())
 <tr>
 <td><b>Room no :</b></td>
 <td><?php echo $row->roomno;?></td>
-<td><b>Seater :</b></td>
+<td><b>Bed Space :</b></td>
 <td><?php echo $row->seater;?></td>
-<td><b>Fees PM :</b></td>
+<td><b>Room fee (Per Section) :</b></td>
 <td><?php echo $fpm=$row->feespm;?></td>
 </tr>
 
-<tr>
+<!--<tr>
 <td><b>Food Status:</b></td>
 <td>
 <?php if($row->foodstatus==0)
@@ -103,15 +103,17 @@ else
 {
 echo "With Food";
 }
-;?></td>
-<td><b>Stay From :</b></td>
+;?></td>-->
+<td><b>Resumption  :</b></td>
 <td><?php echo $row->stayfrom;?></td>
 <td><b>Duration:</b></td>
 <td><?php echo $dr=$row->duration;?> Months</td>
+<th>Hostel Fee:</th>
+<td><?php echo $hf=$fpm?></td>
 </tr>
 
-<tr><th>Hostel Fee:</th>
-<td><?php echo $hf=$dr*$fpm?></td>
+<!--<tr><th>Hostel Fee:</th>
+<td><?php echo $hf=$fpm?></td>
 <th>Food Fee:</th>
 <td colspan="3"><?php 
 if($row->foodstatus==1)
@@ -120,7 +122,7 @@ echo $ff=(2000*$dr);
 } else { 
 echo $ff=0;
 echo "<span style='padding-left:2%; color:red;'>(You booked hostel without food).<span>";
-}?></td>
+}?></td>-->
 </tr>
 <tr>
 <th>Total Fee :</th>
@@ -131,7 +133,7 @@ echo "<span style='padding-left:2%; color:red;'>(You booked hostel without food)
 </tr>
 
 <tr>
-<td><b>Reg No. :</b></td>
+<td><b>Matriculation No. :</b></td>
 <td><?php echo $row->regno;?></td>
 <td><b>Full Name :</b></td>
 <td><?php echo $row->firstName;?><?php echo $row->middleName;?><?php echo $row->lastName;?></td>

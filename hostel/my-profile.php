@@ -82,7 +82,7 @@ Last Updation date : &nbsp; <?php echo $row->updationDate;?>
 								
 
 <div class="form-group">
-<label class="col-sm-2 control-label"> Registration No : </label>
+<label class="col-sm-2 control-label"> Matriculation No : </label>
 <div class="col-sm-8">
 <input type="text" name="regno" id="regno"  class="form-control" required="required" value="<?php echo $row->regNo;?>" readonly="true">
 </div>

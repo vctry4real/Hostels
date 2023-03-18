@@ -54,9 +54,9 @@ if(isset($_GET['del']))
 										<tr>
 											<th>Sno.</th>
 										
-											<th>Seater</th>
+											<th>Bed Space</th>
 											<th>Room No.</th>
-											<th>Fees (PM) </th>
+											<th>Room Fee </th>
 
 											<th>Posting Date  </th>
 											<th>Action</th>
@@ -65,10 +65,10 @@ if(isset($_GET['del']))
 									<tfoot>
 										<tr>
 											<th>Sno.</th>
-											<th>Seater</th>
+											<th>Bed Space</th>
 											<th>Room No.</th>
 										
-											<th>Fees (PM) </th>
+											<th>Room Fee </th>
 											<th>Posting Date  </th>
 											<th>Action</th>
 										</tr>

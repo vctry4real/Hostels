@@ -53,7 +53,7 @@ if(isset($_GET['del']))
 									<thead>
 										<tr>
 											<th>Sno.</th>
-											<th>Course Code</th>
+											<!--<th>Course Code</th>-->
 											<th>Course Name(Short)</th>
 											<th>Course Name(Full)</th>
 											<th>Reg Date </th>
@@ -63,7 +63,7 @@ if(isset($_GET['del']))
 									<tfoot>
 										<tr>
 											<th>Sl No</th>
-											<th>Course Code</th>
+											<!--<th>Course Code</th>-->
 											<th>Course Name(Short)</th>
 											<th>Course Name(Full)</th>
 											<th>Regd Date</th>
@@ -82,7 +82,7 @@ while($row=$res->fetch_object())
 	  {
 	  	?>
 <tr><td><?php echo $cnt;;?></td>
-<td><?php echo $row->course_code;?></td>
+<!--<td><?php echo $row->course_code;?></td>-->
 <td><?php echo $row->course_sn;?></td>
 <td><?php echo $row->course_fn;?></td>
 <td><?php echo $row->posting_date;?></td>

@@ -170,7 +170,7 @@ CREATE TABLE `states` (
 --
 
 INSERT INTO `states` (`id`, `State`) VALUES
-(1, 'Andaman and Nicobar Island (UT)'),
+(1, 'Abia State'),
 (2, 'Andhra Pradesh'),
 (3, 'Arunachal Pradesh'),
 (4, 'Assam'),

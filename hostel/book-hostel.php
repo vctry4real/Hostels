@@ -27,11 +27,11 @@ $gurcntno=$_POST['gcontact'];
 $caddress=$_POST['address'];
 $ccity=$_POST['city'];
 $cstate=$_POST['state'];
-$cpincode=$_POST['pincode'];
+//$cpincode=$_POST['pincode'];
 $paddress=$_POST['paddress'];
 $pcity=$_POST['pcity'];
 $pstate=$_POST['pstate'];
-$ppincode=$_POST['ppincode'];
+//$ppincode=$_POST['ppincode'];
 $query="insert into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 $stmt = $mysqli->prepare($query);
 $rc=$stmt->bind_param('iiiisisissssisississsisssi',$roomno,$seater,$feespm,$foodstatus,$stayfrom,$duration,$course,$regno,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode);
@@ -159,29 +159,29 @@ while($row=$res->fetch_object())
 </div>
 											
 <div class="form-group">
-<label class="col-sm-2 control-label">Seater</label>
+<label class="col-sm-2 control-label">Bed Space</label>
 <div class="col-sm-8">
 <input type="text" name="seater" id="seater"  class="form-control" readonly="true">
 </div>
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Fees Per Month</label>
+<label class="col-sm-2 control-label">Fees Per  Section</label>
 <div class="col-sm-8">
 <input type="text" name="fpm" id="fpm"  class="form-control" readonly="true">
 </div>
 </div>
 
-<div class="form-group">
+<!--<div class="form-group">
 <label class="col-sm-2 control-label">Food Status</label>
 <div class="col-sm-8">
 <input type="radio" value="0" name="foodstatus" checked="checked"> Without Food
 <input type="radio" value="1" name="foodstatus"> With Food(Rs 2000.00 Per Month Extra)
 </div>
-</div>	
+</div> -->	
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Stay From</label>
+<label class="col-sm-2 control-label">Resumption</label>
 <div class="col-sm-8">
 <input type="date" name="stayf" id="stayf"  class="form-control" >
 </div>
@@ -244,7 +244,7 @@ $aid=$_SESSION['id'];
 	  	?>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Registration No : </label>
+<label class="col-sm-2 control-label">Matriculation No : </label>
 <div class="col-sm-8">
 <input type="text" name="regno" id="regno"  class="form-control" value="<?php echo $row->regNo;?>" readonly >
 </div>
@@ -358,12 +358,12 @@ while($row=$res->fetch_object())
 </select> </div>
 </div>							
 
-<div class="form-group">
+<!--<div class="form-group">
 <label class="col-sm-2 control-label">Pincode : </label>
 <div class="col-sm-8">
 <input type="text" name="pincode" id="pincode"  class="form-control" required="required">
 </div>
-</div>	
+</div>	 -->
 
 <div class="form-group">
 <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Permanent Address </h4> </label>
@@ -409,12 +409,12 @@ while($row=$res->fetch_object())
 </select> </div>
 </div>							
 
-<div class="form-group">
+<!--<div class="form-group">
 <label class="col-sm-2 control-label">Pincode : </label>
 <div class="col-sm-8">
 <input type="text" name="ppincode" id="ppincode"  class="form-control" required="required">
 </div>
-</div>	
+</div>-->	
 
 
 <div class="col-sm-6 col-sm-offset-4">
