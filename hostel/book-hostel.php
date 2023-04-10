@@ -1,7 +1,10 @@
+
 <?php
 session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
+include("functions.php");
+
 check_login();
 //code for registration
 if(isset($_POST['submit']))
@@ -9,7 +12,7 @@ if(isset($_POST['submit']))
 $roomno=$_POST['room'];
 $seater=$_POST['seater'];
 $feespm=$_POST['fpm'];
-$foodstatus=$_POST['foodstatus'];
+//$foodstatus=$_POST['foodstatus'];
 $stayfrom=$_POST['stayf'];
 $duration=$_POST['duration'];
 $course=$_POST['course'];
@@ -31,12 +34,14 @@ $cstate=$_POST['state'];
 $paddress=$_POST['paddress'];
 $pcity=$_POST['pcity'];
 $pstate=$_POST['pstate'];
+$message= "$fname $lname has applied to book a room";
 //$ppincode=$_POST['ppincode'];
-$query="insert into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-$stmt = $mysqli->prepare($query);
-$rc=$stmt->bind_param('iiiisisissssisississsisssi',$roomno,$seater,$feespm,$foodstatus,$stayfrom,$duration,$course,$regno,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode);
-$stmt->execute();
-echo"<script>alert('Student Succssfully register');</script>";
+$query= "INSERT INTO `request` (`id`, `firstname`, `lastname`, `email`,`bedspace`,`feespm`, `message`, `middlename`, `stayfrom`, `duration`, `course`, `regno`, `roomno`, `gender`, `contactno`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAdress`, `corresCity`, `corresState`, `pmntAddress`, `pmntCity`, `pmnatetState`,`date`) VALUES (NULL, '$fname', '$lname', '$emailid', '$seater','$feespm', '$message', '$mname', '$stayfrom', '$duration', '$course', '$regno', '$roomno', '$gender', '$contactno', '$emcntno', '$gurname', '$gurrelation', '$gurcntno', '$caddress', '$ccity', '$cstate', '$paddress', '$pcity', '$pstate',current_timestamp())";
+if(performQuery($query)){
+	echo"<script> alert('Your booking request is now pending for approval. Please wait for confirmation. Thank you')</script>";
+  }else{
+	echo"<script>alert('unknown error occured')</script>"; 
+  }
 }
 ?>
 
@@ -419,7 +424,7 @@ while($row=$res->fetch_object())
 
 <div class="col-sm-6 col-sm-offset-4">
 <button class="btn btn-default" type="submit">Cancel</button>
-<input type="submit" name="submit" Value="Register" class="btn btn-primary">
+<input type="submit" name="submit" Value="Book" class="btn btn-primary">
 </div>
 </form>
 <?php } ?>

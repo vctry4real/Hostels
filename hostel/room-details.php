@@ -173,7 +173,7 @@ echo "<span style='padding-left:2%; color:red;'>(You booked hostel without food)
 <td><b>Correspondense Address</b></td>
 <td colspan="2">
 <?php echo $row->corresAddress;?><br />
-<?php echo $row->corresCIty;?>, <?php echo $row->corresPincode;?><br />
+<?php echo $row->corresCIty;?>, <?php //echo $row->corresPincode;?><br />
 <?php echo $row->corresState;?>
 
 
@@ -181,7 +181,7 @@ echo "<span style='padding-left:2%; color:red;'>(You booked hostel without food)
 <td><b>Permanent Address</b></td>
 <td colspan="2">
 <?php echo $row->pmntAddress;?><br />
-<?php echo $row->pmntCity;?>, <?php echo $row->pmntPincode;?><br />
+<?php echo $row->pmntCity;?>, <?php //echo $row->pmntPincode;?><br />
 <?php echo $row->pmnatetState;?>	
 
 </td>

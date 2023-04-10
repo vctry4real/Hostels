@@ -9,9 +9,9 @@ if(isset($_POST['submit']))
 $seater=$_POST['seater'];
 $roomno=$_POST['rmno'];
 $fees=$_POST['fee'];
-$sql="SELECT room_no FROM rooms where room_no=?";
+$sql="SELECT room_no FROM blockb where room_no=?";
 $stmt1 = $mysqli->prepare($sql);
-$stmt1->bind_param('i',$roomno);
+$stmt1->bind_param('s',$roomno);
 $stmt1->execute();
 $stmt1->store_result(); 
 $row_cnt=$stmt1->num_rows;;
@@ -21,11 +21,15 @@ echo"<script>alert('Room alreadt exist');</script>";
 }
 else 
 {
-$query="insert into  rooms (seater,room_no,fees) values(?,?,?)";
+$query="insert into blockb (seater,room_no,fees) values(?,?,?)";
 $stmt = $mysqli->prepare($query);
-$rc=$stmt->bind_param('iii',$seater,$roomno,$fees);
-$stmt->execute();
-echo"<script>alert('Room has been added successfully');</script>";
+$rc=$stmt->bind_param('isi',$seater,$roomno,$fees);
+if($stmt->execute()) {
+    echo "<script>alert('Room has been added successfully');</script>";
+} else {
+    echo "<script>alert('Room was not added. Error: ".$mysqli->error."');</script>";
+}
+
 }
 }
 ?>
@@ -69,7 +73,7 @@ echo"<script>alert('Room has been added successfully');</script>";
 									<div class="panel-body">
 									<?php if(isset($_POST['submit']))
 { ?>
-<p style="color: red"><?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg']=""); ?></p>
+<p style="color: red"><?php //echo htmlentities($_SESSION['msg']); ?><?php //echo htmlentities($_SESSION['msg']=""); ?></p>
 <?php } ?>
 										<form method="post" class="form-horizontal">
 											
