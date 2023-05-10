@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2020 at 05:11 PM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.2.19
+-- Generation Time: Apr 11, 2023 at 10:03 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -60,6 +59,50 @@ CREATE TABLE `adminlog` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `blocka`
+--
+
+CREATE TABLE `blocka` (
+  `id` int(11) NOT NULL,
+  `seater` int(11) NOT NULL,
+  `room_no` text DEFAULT NULL,
+  `fees` varchar(11) NOT NULL,
+  `posting_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `blocka`
+--
+
+INSERT INTO `blocka` (`id`, `seater`, `room_no`, `fees`, `posting_date`) VALUES
+(11, 3, 'A001', '120000', '2023-04-10 09:17:20'),
+(12, 3, 'A002', '120000', '2023-04-10 09:24:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blockb`
+--
+
+CREATE TABLE `blockb` (
+  `id` int(11) NOT NULL,
+  `seater` int(11) NOT NULL,
+  `room_no` varchar(11) NOT NULL,
+  `fees` varchar(11) NOT NULL,
+  `posting_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `blockb`
+--
+
+INSERT INTO `blockb` (`id`, `seater`, `room_no`, `fees`, `posting_date`) VALUES
+(3, 3, 'B001', '120000', '2023-04-10 20:27:52'),
+(4, 3, 'B002', '120000', '2023-04-10 20:28:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `courses`
 --
 
@@ -76,13 +119,32 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `posting_date`) VALUES
-(1, 'B10992', 'B.Tech', 'Bachelor  of Technology', '2020-07-04 19:31:42'),
-(2, 'BCOM1453', 'B.Com', 'Bachelor Of commerce ', '2020-07-04 19:31:42'),
-(3, 'BSC12', 'BSC', 'Bachelor  of Science', '2020-07-04 19:31:42'),
-(4, 'BC36356', 'BCA', 'Bachelor Of Computer Application', '2020-07-04 19:31:42'),
-(5, 'MCA565', 'MCA', 'Master of Computer Application', '2020-07-04 19:31:42'),
-(6, 'MBA75', 'MBA', 'Master of Business Administration', '2020-07-04 19:31:42'),
-(7, 'BE765', 'BE', 'Bachelor of Engineering', '2020-07-04 19:31:42');
+(12, NULL, 'csc', 'Computer Science', '2023-03-16 03:54:19'),
+(13, NULL, 'phy', 'Physics', '2023-03-16 04:20:26'),
+(14, NULL, 'maths.sci', 'Mathematics', '2023-03-16 04:23:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `message` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `message`) VALUES
+(1, 'hello students'),
+(2, 'welcome to a new session'),
+(4, 'laughing is goood'),
+(5, 'Easter break is commencing on the 6/04/2023 to 11/04/2023 lectures resumes the next day after resumption. you are advised to resume on time'),
+(6, 'checking to see if i am working, i know i am just kidding '),
+(7, 'checking to see if i am working, i know i am just kidding ');
 
 -- --------------------------------------------------------
 
@@ -92,42 +154,73 @@ INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `posting_d
 
 CREATE TABLE `registration` (
   `id` int(11) NOT NULL,
-  `roomno` int(11) DEFAULT NULL,
-  `seater` int(11) DEFAULT NULL,
-  `feespm` int(11) DEFAULT NULL,
-  `foodstatus` int(11) DEFAULT NULL,
-  `stayfrom` date DEFAULT NULL,
-  `duration` int(11) DEFAULT NULL,
-  `course` varchar(500) DEFAULT NULL,
-  `regno` int(11) DEFAULT NULL,
-  `firstName` varchar(500) DEFAULT NULL,
-  `middleName` varchar(500) DEFAULT NULL,
-  `lastName` varchar(500) DEFAULT NULL,
-  `gender` varchar(250) DEFAULT NULL,
-  `contactno` bigint(11) DEFAULT NULL,
-  `emailid` varchar(500) DEFAULT NULL,
-  `egycontactno` bigint(11) DEFAULT NULL,
-  `guardianName` varchar(500) DEFAULT NULL,
-  `guardianRelation` varchar(500) DEFAULT NULL,
-  `guardianContactno` bigint(11) DEFAULT NULL,
-  `corresAddress` varchar(500) DEFAULT NULL,
-  `corresCIty` varchar(500) DEFAULT NULL,
-  `corresState` varchar(500) DEFAULT NULL,
-  `corresPincode` int(11) DEFAULT NULL,
-  `pmntAddress` varchar(500) DEFAULT NULL,
-  `pmntCity` varchar(500) DEFAULT NULL,
-  `pmnatetState` varchar(500) DEFAULT NULL,
-  `pmntPincode` int(11) DEFAULT NULL,
-  `postingDate` timestamp NULL DEFAULT current_timestamp(),
-  `updationDate` varchar(500) DEFAULT NULL
+  `firstName` varchar(100) NOT NULL,
+  `lastName` varchar(100) NOT NULL,
+  `emailid` varchar(100) NOT NULL,
+  `seater` varchar(100) NOT NULL,
+  `feespm` varchar(100) NOT NULL,
+  `middleName` varchar(100) NOT NULL,
+  `stayfrom` varchar(100) NOT NULL,
+  `duration` varchar(100) DEFAULT NULL,
+  `course` varchar(100) DEFAULT NULL,
+  `regno` varchar(100) DEFAULT NULL,
+  `roomno` varchar(100) NOT NULL,
+  `gender` varchar(100) DEFAULT NULL,
+  `contactno` varchar(100) DEFAULT NULL,
+  `egycontactno` varchar(100) DEFAULT NULL,
+  `guardianName` varchar(100) DEFAULT NULL,
+  `guardianRelation` varchar(100) DEFAULT NULL,
+  `guardianContactno` varchar(100) DEFAULT NULL,
+  `corresAddress` varchar(100) DEFAULT NULL,
+  `corresCIty` varchar(100) DEFAULT NULL,
+  `corresState` varchar(100) DEFAULT NULL,
+  `pmntAddress` varchar(100) DEFAULT NULL,
+  `pmntCity` varchar(100) DEFAULT NULL,
+  `pmnatetState` varchar(100) DEFAULT NULL,
+  `postingDate` varchar(100) NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `registration`
 --
 
-INSERT INTO `registration` (`id`, `roomno`, `seater`, `feespm`, `foodstatus`, `stayfrom`, `duration`, `course`, `regno`, `firstName`, `middleName`, `lastName`, `gender`, `contactno`, `emailid`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `corresPincode`, `pmntAddress`, `pmntCity`, `pmnatetState`, `pmntPincode`, `postingDate`, `updationDate`) VALUES
-(2, 100, 5, 8000, 1, '2020-08-01', 6, 'Bachelor  of Technology', 10806121, 'Anuj', '', 'kumar', 'male', 1234567890, 'ak@gmail.com', 1236547890, 'ABC', 'XYZ', 98756320000, 'ABC 12345 XYZ Street', 'New Delhi', 'Delhi (NCT)', 110001, 'ABC 12345 XYZ Street', 'New Delhi', 'Delhi (NCT)', 110001, '2020-07-20 14:58:26', NULL);
+INSERT INTO `registration` (`id`, `firstName`, `lastName`, `emailid`, `seater`, `feespm`, `middleName`, `stayfrom`, `duration`, `course`, `regno`, `roomno`, `gender`, `contactno`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `pmntAddress`, `pmntCity`, `pmnatetState`, `postingDate`) VALUES
+(30, ' Victory', 'barner', 'abraham@gmail.com', '4', '60000', 'MATT', '2023-04-09', '4', 'Physics', 'CRW/SCI/20/', '4', 'female', '80773345749', '090879717236', 'zask', 'kass', '090112246423', 'qwertyu zxcvb', 'Benin city', 'Cross River State', 'qwertyu zxcvb', 'Benin city', 'Cross River State', '2023-04-08 12:32:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `request`
+--
+
+CREATE TABLE `request` (
+  `id` int(11) NOT NULL,
+  `firstname` text NOT NULL,
+  `lastname` text NOT NULL,
+  `email` text NOT NULL,
+  `bedspace` int(11) NOT NULL,
+  `feespm` varchar(100) NOT NULL,
+  `message` text NOT NULL,
+  `middlename` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `stayfrom` date NOT NULL,
+  `duration` varchar(11) CHARACTER SET latin1 NOT NULL,
+  `course` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `regno` varchar(11) CHARACTER SET latin1 NOT NULL,
+  `roomno` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `gender` varchar(250) CHARACTER SET latin1 NOT NULL,
+  `contactno` varchar(20) NOT NULL,
+  `egycontactno` varchar(20) NOT NULL,
+  `guardianName` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `guardianRelation` varchar(500) NOT NULL,
+  `guardianContactno` varchar(20) NOT NULL,
+  `corresAdress` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `corresCity` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `corresState` varchar(500) CHARACTER SET latin1 NOT NULL,
+  `pmntAddress` varchar(500) NOT NULL,
+  `pmntCity` varchar(500) NOT NULL,
+  `pmnatetState` varchar(500) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -148,11 +241,13 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `seater`, `room_no`, `fees`, `posting_date`) VALUES
-(1, 5, 100, 8000, '2020-04-11 22:45:43'),
-(2, 2, 201, 6000, '2020-04-12 01:30:47'),
-(3, 2, 200, 6000, '2020-04-12 01:30:58'),
-(4, 3, 112, 4000, '2020-04-12 01:31:07'),
-(5, 5, 132, 2000, '2020-04-12 01:31:15');
+(12, 1, 1, 120000, '2023-03-17 17:31:17'),
+(13, 2, 2, 100000, '2023-03-17 17:31:49'),
+(14, 3, 3, 80000, '2023-03-17 17:32:10'),
+(15, 4, 4, 60000, '2023-03-17 17:32:46'),
+(17, 2, 22, 100000, '2023-03-17 23:20:53'),
+(19, 4, 567, 12000, '2023-03-18 19:10:39'),
+(20, 3, 0, 120000, '2023-04-10 09:19:49');
 
 -- --------------------------------------------------------
 
@@ -171,41 +266,42 @@ CREATE TABLE `states` (
 
 INSERT INTO `states` (`id`, `State`) VALUES
 (1, 'Abia State'),
-(2, 'Andhra Pradesh'),
-(3, 'Arunachal Pradesh'),
-(4, 'Assam'),
-(5, 'Bihar'),
-(6, 'Chandigarh (UT)'),
-(7, 'Chhattisgarh'),
-(8, 'Dadra and Nagar Haveli (UT)'),
-(9, 'Daman and Diu (UT)'),
-(10, 'Delhi (NCT)'),
-(11, 'Goa'),
-(12, 'Gujarat'),
-(13, 'Haryana'),
-(14, 'Himachal Pradesh'),
-(15, 'Jammu and Kashmir'),
-(16, 'Jharkhand'),
-(17, 'Karnataka'),
-(18, 'Kerala'),
-(19, 'Lakshadweep (UT)'),
-(20, 'Madhya Pradesh'),
-(21, 'Maharashtra'),
-(22, 'Manipur'),
-(23, 'Meghalaya'),
-(24, 'Mizoram'),
-(25, 'Nagaland'),
-(26, 'Odisha'),
-(27, 'Puducherry (UT)'),
-(28, 'Punjab'),
-(29, 'Rajastha'),
-(30, 'Sikkim'),
-(31, 'Tamil Nadu'),
-(32, 'Telangana'),
-(33, 'Tripura'),
-(34, 'Uttarakhand'),
-(35, 'Uttar Pradesh'),
-(36, 'West Bengal');
+(2, 'Adamawa State'),
+(3, 'Akwa Ibom State'),
+(4, 'Anambra State'),
+(5, 'Bauchi State'),
+(6, 'Bayelsa State'),
+(7, 'Benue State'),
+(8, 'Borno State'),
+(9, 'Cross River State'),
+(10, 'Delta State'),
+(11, 'Ebonyi State'),
+(12, 'Edo State'),
+(13, 'Ekiti State'),
+(14, 'Enugu State'),
+(15, 'Gombe State'),
+(16, 'Imo State'),
+(17, 'Jigawa State'),
+(18, 'Kaduna State'),
+(19, 'Kano State'),
+(20, 'Katsina State'),
+(21, 'Kebbi State'),
+(22, 'Kogi State'),
+(23, 'Kwara State'),
+(24, 'Lagos State'),
+(25, 'Nasarawa State'),
+(26, 'Niger State'),
+(27, 'Ogun State'),
+(28, 'Ondo State'),
+(29, 'Osun State'),
+(30, 'Oyo State'),
+(31, 'Plateau State'),
+(32, 'Rivers State'),
+(33, 'Sokoto State'),
+(34, 'Taraba State'),
+(35, 'Yobe State'),
+(36, 'Zamfara State'),
+(37, 'Abuja(FCT)');
 
 -- --------------------------------------------------------
 
@@ -228,7 +324,47 @@ CREATE TABLE `userlog` (
 --
 
 INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`, `loginTime`) VALUES
-(6, 3, '10806121', 0x3a3a31, '', '', '2020-07-20 14:56:45');
+(6, 3, '10806121', 0x3a3a31, '', '', '2020-07-20 14:56:45'),
+(7, 4, 'savemepls@gmail.com', 0x3a3a31, '', '', '2023-03-14 11:37:07'),
+(8, 5, 'sweetadam@gmail.com', 0x3a3a31, '', '', '2023-03-15 14:43:33'),
+(9, 5, 'sweetadam@gmail.com', 0x3a3a31, '', '', '2023-03-15 18:25:05'),
+(10, 5, 'sweetadam@gmail.com', 0x3a3a31, '', '', '2023-03-16 12:48:33'),
+(11, 8, 'gabiturner@gmail.com', 0x3a3a31, '', '', '2023-03-17 17:29:44'),
+(12, 9, 'tessa@gmail.com', 0x3a3a31, '', '', '2023-03-17 18:13:00'),
+(13, 8, 'gabiturner@gmail.com', 0x3a3a31, '', '', '2023-03-17 19:16:48'),
+(14, 11, 'treqnasion@gmail.com', 0x3a3a31, '', '', '2023-03-18 16:50:42'),
+(15, 12, 'idgaf@gmail.com', 0x3a3a31, '', '', '2023-03-18 16:52:22'),
+(16, 12, 'idgaf@gmail.com', 0x3a3a31, '', '', '2023-03-18 18:49:47'),
+(17, 12, 'idgaf@gmail.com', 0x3a3a31, '', '', '2023-03-18 19:04:17'),
+(18, 12, 'idgaf@gmail.com', 0x3a3a31, '', '', '2023-03-18 19:23:48'),
+(19, 12, 'idgaf@gmail.com', 0x3a3a31, '', '', '2023-03-18 21:26:21'),
+(20, 12, 'idgaf@gmail.com', 0x3a3a31, '', '', '2023-03-20 15:20:43'),
+(21, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-03-29 10:15:43'),
+(22, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-03-30 20:25:29'),
+(23, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-03-31 02:03:08'),
+(24, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-01 04:15:25'),
+(25, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-02 11:32:32'),
+(26, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-02 12:00:57'),
+(27, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-02 12:38:38'),
+(28, 8, 'gabiturner@gmail.com', 0x3a3a31, '', '', '2023-04-02 12:50:23'),
+(29, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-02 13:13:08'),
+(30, 8, 'gabiturner@gmail.com', 0x3a3a31, '', '', '2023-04-02 13:13:27'),
+(31, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-02 13:13:40'),
+(32, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-04 10:28:35'),
+(33, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-04 10:47:31'),
+(34, 8, 'gabiturner@gmail.com', 0x3a3a31, '', '', '2023-04-04 11:11:23'),
+(35, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-04 11:23:11'),
+(36, 8, 'gabiturner@gmail.com', 0x3a3a31, '', '', '2023-04-04 13:51:18'),
+(37, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-05 20:59:28'),
+(38, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-07 17:02:29'),
+(39, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-08 07:33:15'),
+(40, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-08 08:30:25'),
+(41, 17, 'abraham@gmail.com', 0x3a3a31, '', '', '2023-04-08 10:10:54'),
+(42, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-08 11:33:49'),
+(43, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-08 23:51:56'),
+(44, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-09 15:37:06'),
+(45, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-10 15:40:22'),
+(46, 16, 'matthew@gmail.com', 0x3a3a31, '', '', '2023-04-11 09:32:08');
 
 -- --------------------------------------------------------
 
@@ -256,7 +392,8 @@ CREATE TABLE `userregistration` (
 --
 
 INSERT INTO `userregistration` (`id`, `regNo`, `firstName`, `middleName`, `lastName`, `gender`, `contactNo`, `email`, `password`, `regDate`, `updationDate`, `passUdateDate`) VALUES
-(3, '10806121', 'Anuj', '', 'kumar', 'male', 1234567890, 'test@gmail.com', 'Test@123', '2020-07-20 14:56:18', NULL, NULL);
+(16, '30N23SCI', 'Matthew', 'Julius', 'Philip', 'male', 90883823578, 'matthew@gmail.com', 'matthew', '2023-03-29 10:15:14', NULL, NULL),
+(17, 'CRW/SCI/20/1489', ' Victory', 'MATT', 'barner', 'female', 80773345749, 'abraham@gmail.com', 'abraham', '2023-04-08 10:09:47', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -269,15 +406,39 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `blocka`
+--
+ALTER TABLE `blocka`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `blockb`
+--
+ALTER TABLE `blockb`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `registration`
 --
 ALTER TABLE `registration`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `request`
+--
+ALTER TABLE `request`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -317,40 +478,64 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `blocka`
+--
+ALTER TABLE `blocka`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `blockb`
+--
+ALTER TABLE `blockb`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `request`
+--
+ALTER TABLE `request`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `userregistration`
 --
 ALTER TABLE `userregistration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
