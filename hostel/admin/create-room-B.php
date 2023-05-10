@@ -64,7 +64,7 @@ if($stmt->execute()) {
 				<div class="row">
 					<div class="col-md-12">
 					
-						<h2 class="page-title">Add a Room </h2>
+						<h2 class="page-title">Add a Room To Block B </h2>
 	
 						<div class="row">
 							<div class="col-md-12">
@@ -73,7 +73,14 @@ if($stmt->execute()) {
 									<div class="panel-body">
 									<?php if(isset($_POST['submit']))
 { ?>
-<p style="color: red"><?php //echo htmlentities($_SESSION['msg']); ?><?php //echo htmlentities($_SESSION['msg']=""); ?></p>
+<?php 
+    if(isset($_SESSION['msg'])) {
+?>
+        <p style="color: red"><?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg']=""); ?></p>
+<?php 
+    } 
+?>
+
 <?php } ?>
 										<form method="post" class="form-horizontal">
 											

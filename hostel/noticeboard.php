@@ -66,6 +66,9 @@ if ($result->num_rows > 0) {
     // If there are no messages, display a message to the user
     echo 'No messages found.';
 }
+
+echo '<br/><br/>
+<a href="dashboard.php">Back</a>';
 $conn->close();
 ?>
 

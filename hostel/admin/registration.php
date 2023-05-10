@@ -6,13 +6,15 @@ check_login();
 //code for registration
 if(isset($_POST['submit']))
 {
+$hostel=$_POST['block'];
 $roomno=$_POST['room'];
 $seater=$_POST['seater'];
 $feespm=$_POST['fpm'];
-$foodstatus=$_POST['foodstatus'];
+//$foodstatus=$_POST['foodstatus'];
 $stayfrom=$_POST['stayf'];
 $duration=$_POST['duration'];
 $course=$_POST['course'];
+$level=$_POST['level'];
 $regno=$_POST['regno'];
 $fname=$_POST['fname'];
 $mname=$_POST['mname'];
@@ -45,11 +47,9 @@ echo"<script>alert('Registration number or email id already registered.');</scri
 }else{
 
 
-$query="insert into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-$stmt = $mysqli->prepare($query);
-$rc=$stmt->bind_param('iiiisisissssisississsisssi',$roomno,$seater,$feespm,$foodstatus,$stayfrom,$duration,$course,$regno,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode);
-$stmt->execute();
-$stmt->close();
+// Insert data into the registration table
+$sql = "INSERT INTO registration (firstName, lastName, emailid, seater, feespm, middleName, stayfrom, duration, course, level, regno, hostel, roomno, gender, contactno, egycontactno, guardianName, guardianRelation, guardianContactno, corresAddress, corresCIty, corresState, pmntAddress, pmntCity, pmnatetState) VALUES ('$fname','$lname','$emailid','$seater', '$feespm','$mname','$stayfrom','$duration','$course','$level','$regno','$hostel','$roomno','$gender','$contactno','$emcntno','$gurname','$gurrelation','$gurcntno','$caddress','$ccity','$cstate','$paddress','$pcity','$pstate')";
+
 
 
 $query1="insert into  userregistration(regNo,firstName,middleName,lastName,gender,contactNo,email,password) values(?,?,?,?,?,?,?,?)";
@@ -104,6 +104,54 @@ $('#fpm').val(data);
 }
 });
 }
+
+
+// function to get the available rooms for a selected block
+function getRooms(selectedBlock) {
+		console.log("Selected block: " + selectedBlock);
+		// set the value of selectedBlock
+		window.selectedBlock = selectedBlock;
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var rooms = JSON.parse(this.responseText);
+				var roomSelect = document.getElementById("room");
+				roomSelect.innerHTML = "";
+				for (var i = 0; i < rooms.length; i++) {
+					var option = document.createElement("option");
+					option.value = rooms[i];
+					option.text = rooms[i];
+					roomSelect.appendChild(option);
+				}
+			}
+		};
+
+		xhr.open("GET", "get_rooms.php?block=" + selectedBlock, true);
+		xhr.send();
+	}
+
+
+
+
+	function getBedSpace(selectedRoom) {
+		console.log("Selected room: " + selectedRoom);
+		console.log("Selected block: " + window.selectedBlock); // use the global selectedBlock variable
+		var seaterInput = document.getElementById("seater");
+		var feeInput = document.getElementById("fpm");
+		
+		// make AJAX request to server-side script to get the bed space and rental fee for the selected room and block from the database
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var data = JSON.parse(this.responseText);
+				seaterInput.value = data.seater;
+				feeInput.value = data.fee;
+			}
+		};
+		xhr.open("GET", "get_bed_space.php?block=" + window.selectedBlock + "&room=" + selectedRoom, true); // use the global selectedBlock variable
+		xhr.send();
+	}
+
 </script>
 
 </head>
@@ -132,37 +180,39 @@ $('#fpm').val(data);
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Room no. </label>
-<div class="col-sm-8">
-<select name="room" id="room"class="form-control"  onChange="getSeater(this.value);" onBlur="checkAvailability()" required> 
-<option value="">Select Room</option>
-<?php $query ="SELECT * FROM rooms";
-$stmt2 = $mysqli->prepare($query);
-$stmt2->execute();
-$res=$stmt2->get_result();
-while($row=$res->fetch_object())
-{
-?>
-<option value="<?php echo $row->room_no;?>"> <?php echo $row->room_no;?></option>
-<?php } ?>
-</select> 
-<span id="room-availability-status" style="font-size:12px;"></span>
-
+    <label class="col-sm-2 control-label">Select Hostel</label>
+    <div class="col-sm-8">
+        <select name="block" id="block" class="form-control" onChange="getRooms(this.value);" required> 
+            <option value="">Select Block</option>
+            <option value="blocka">Block A</option>
+            <option value="blockb">Block B</option>
+        </select> 
+    </div>
 </div>
+
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">Select Room</label>
+    <div class="col-sm-8">
+        <select name="room" id="room" class="form-control" onChange="getBedSpace(this.value);" required> 
+            <option value="">Select Room</option>
+        </select> 
+        <span id="room-availability-status" style="font-size:12px;"></span>
+    </div>
 </div>
 											
 <div class="form-group">
-<label class="col-sm-2 control-label">Bed Space</label>
-<div class="col-sm-8">
-<input type="text" name="seater" id="seater"  class="form-control" readonly="true"  >
-</div>
+    <label class="col-sm-2 control-label">Bed Space</label>
+    <div class="col-sm-8">
+        <input type="text" name="seater" id="seater" class="form-control" readonly="true">
+    </div>
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Fees Per (Section)</label>
-<div class="col-sm-8">
-<input type="text" name="fpm" id="fpm"  class="form-control" readonly="true">
-</div>
+    <label class="col-sm-2 control-label">Fee</label>
+    <div class="col-sm-8">
+        <input type="text" name="fpm" id="fpm" class="form-control" readonly="true">
+    </div>
 </div>
 
 <!--<div class="form-group">
@@ -207,20 +257,18 @@ while($row=$res->fetch_object())
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">course </label>
-<div class="col-sm-8">
-<select name="course" id="course" class="form-control" required> 
-<option value="">Select Course</option>
-<?php $query ="SELECT * FROM courses";
-$stmt2 = $mysqli->prepare($query);
-$stmt2->execute();
-$res=$stmt2->get_result();
-while($row=$res->fetch_object())
-{
-?>
-<option value="<?php echo $row->course_fn;?>"><?php echo $row->course_fn;?>&nbsp;&nbsp;(<?php echo $row->course_sn;?>)</option>
-<?php } ?>
-</select> </div>
+	<label class="col-sm-2 control-label">course </label>
+	<div class="col-sm-8">
+	<input name="course" id="course" class="form-control" required> 
+
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">Level </label>
+	<div class="col-sm-8">
+	<input name="level" id="level" class="form-control" required> 
+	</div>
 </div>
 
 <div class="form-group">

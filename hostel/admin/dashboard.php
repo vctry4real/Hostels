@@ -71,7 +71,7 @@ $stmt->close();
 											<div class="panel-body bk-success text-light">
 												<div class="stat-panel text-center">
 <?php
-$result1 ="SELECT count(*) FROM rooms ";
+$result1 ="SELECT count(*) FROM blocka ";
 $stmt1 = $mysqli->prepare($result1);
 $stmt1->execute();
 $stmt1->bind_result($count1);
@@ -79,35 +79,95 @@ $stmt1->fetch();
 $stmt1->close();
 ?>												
 													<div class="stat-panel-number h1 "><?php echo $count1;?></div>
-													<div class="stat-panel-title text-uppercase">Total Rooms </div>
+													<div class="stat-panel-title text-uppercase">Block A Rooms </div>
 												</div>
 											</div>
-											<a href="manage-rooms.php" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="manage-rooms-A.php" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="panel panel-default">
 											<div class="panel-body bk-info text-light">
 												<div class="stat-panel text-center">
-<?php
-$result2 ="SELECT count(*) FROM courses ";
-$stmt2 = $mysqli->prepare($result2);
-$stmt2->execute();
-$stmt2->bind_result($count2);
-$stmt2->fetch();
-$stmt2->close();
+
+
+												<?php
+$result1 ="SELECT count(*) FROM blockb ";
+$stmt1 = $mysqli->prepare($result1);
+$stmt1->execute();
+$stmt1->bind_result($count1);
+$stmt1->fetch();
+$stmt1->close();
 ?>												
-													<div class="stat-panel-number h1 "><?php echo $count2;?></div>
-													<div class="stat-panel-title text-uppercase">Total Courses</div>
+													<div class="stat-panel-number h1 "><?php echo $count1;?></div>
+													<div class="stat-panel-title text-uppercase">Block B Rooms </div>
 												</div>
 											</div>
-											<a href="manage-courses.php" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
+											<a href="manage-rooms-B.php" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
 										</div>
 									</div>
-									
-								</div>
-							</div>
-						</div>
+	
+	<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-body bk-info text-light">
+            <div class="stat-panel text-center">
+                <?php
+                // Connect to database
+                $conn = new mysqli("localhost", "root", "", "hostel");
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Prepare and execute query to count the number of fully booked rooms
+                $stmt = $conn->prepare("SELECT count(*) FROM registration WHERE hostel='blocka'");
+                $stmt->execute();
+                $stmt->bind_result($count);
+                $stmt->fetch();
+                $stmt->close();
+                ?>
+                <div class="stat-panel-number h1 "><?php echo $count;?></div>
+                <div class="stat-panel-title text-uppercase">Occupants In Block A</div>
+            </div>
+        </div>
+        <a href="occupants_a.php" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
+    </div>
+</div>
+
+
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-body bk-info text-light">
+            <div class="stat-panel text-center">
+                <?php
+                // Connect to database
+                $conn = new mysqli("localhost", "root", "", "hostel");
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Prepare and execute query to count the number of fully booked rooms
+                $stmt = $conn->prepare("SELECT count(*) FROM registration WHERE hostel='blockb'");
+                $stmt->execute();
+                $stmt->bind_result($count);
+                $stmt->fetch();
+                $stmt->close();
+                ?>
+                <div class="stat-panel-number h1 "><?php echo $count;?></div>
+                <div class="stat-panel-title text-uppercase">Occupants In Block B</div>
+            </div>
+        </div>
+        <a href="occupants_b.php" class="block-anchor panel-footer text-center">See All &nbsp; <i class="fa fa-arrow-right"></i></a>
+    </div>
+</div>
+
+
+
+
+
 
 					
 						
@@ -118,7 +178,7 @@ $stmt2->close();
 
 			</div>
 		</div>
-	</div>
+	</div> 
 
 	<!-- Loading Scripts -->
 	<script src="js/jquery.min.js"></script>

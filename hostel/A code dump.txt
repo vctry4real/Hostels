@@ -1,0 +1,406 @@
+<script>
+    function getRooms(block) {
+        if (block == "") {
+            document.getElementById("room").innerHTML = "<option value=''>Select Room</option>";
+            document.getElementById("seater").value = "";
+            document.getElementById("fpm").value = "";
+            return;
+        }
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("room").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "getRooms.php?block=" + block, true);
+        xmlhttp.send();
+    }
+</script>
+
+<script>
+    function getBedSpace(room) {
+            if (room == "") {
+                document.getElementById("seater").value = "";
+                document.getElementById("fpm").value = "";
+                return;
+            }
+            
+            var block = document.getElementById("block").value;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    document.getElementById("seater").value = data.bed_space;
+                    document.getElementById("fpm").value = data.fee;
+                }
+            };
+            xmlhttp.open("GET", "getBedSpace.php?block=" + block + "&room=" + room, true);
+            xmlhttp.send();
+        }
+</script>
+
+
+//////////////////////////////////////////////////////////////////////////
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hostel Room Selection</title>
+	<script>
+		// function to get the available rooms for a selected block
+		function getRooms(selectedBlock) {
+			// create new XMLHttpRequest object
+			var xhr = new XMLHttpRequest();
+			// handle response
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var rooms = JSON.parse(this.responseText);
+					if (rooms.length > 0) {
+						// clear previous options
+						document.getElementById("room").innerHTML = "";
+						// add new options
+						for (var i = 0; i < rooms.length; i++) {
+							var option = document.createElement("option");
+							option.value = rooms[i].room_number;
+							option.text = rooms[i].room_number;
+							document.getElementById("room").appendChild(option);
+						}
+						document.getElementById("room-availability-status").innerHTML = "";
+					} else {
+						document.getElementById("room").innerHTML = "";
+						var option = document.createElement("option");
+						option.text = "No rooms available in this block";
+						document.getElementById("room").appendChild(option);
+						document.getElementById("room-availability-status").innerHTML = "No rooms available in this block";
+					}
+				}
+			};
+			// send request to server-side script
+			xhr.open("GET", "get_rooms.php?block=" + selectedBlock, true);
+			xhr.send();
+		}
+
+	</script>
+</head>
+<body>
+	<div class="form-group">
+	    <label class="col-sm-2 control-label">Select Block</label>
+	    <div class="col-sm-8">
+	        <select name="block" id="block" class="form-control" onchange="getRooms(this.value);" required> 
+	            <option value="">Select Block</option>
+	            <option value="A">Block A</option>
+	            <option value="B">Block B</option>
+	        </select> 
+	    </div>
+	</div>
+
+	<div class="form-group">
+	    <label class="col-sm-2 control-label">Select Room</label>
+	    <div class="col-sm-8">
+	        <select name="room" id="room" class="form-control" onchange="getBedSpace(this.value);" required> 
+	            <option value="">Select Room</option>
+	        </select> 
+	        <span id="room-availability-status" style="font-size:12px;"></span>
+	    </div>
+	</div>
+</body>
+</html>
+
+////////////////// GET BED SPACE ////////////////
+
+<?php
+// retrieve the selected room from the query string parameter
+$selectedRoom = $_GET["room"];
+
+// connect to the database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hostel";
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// check for errors in database connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// prepare and execute the query to retrieve bed space and fee information for selected room
+$sql = "SELECT seater, fees, status FROM rooms WHERE room_number = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $selectedRoom);
+$stmt->execute();
+
+// check for errors in query execution
+if ($stmt->error) {
+    die("Query failed: " . $stmt->error);
+}
+
+// create JSON object with bed space and fee information and send response
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $data = array(
+        "seater" => $row["seater"],
+        "fee" => $row["fees"],
+        "availability" => $row["status"]
+    );
+    echo json_encode($data);
+} else {
+    echo "{}"; // return empty object if no matching room found
+}
+
+// close statement and database connection
+$stmt->close();
+$conn->close();
+
+?>
+
+
+                /////// getBedSpace() ////////
+
+function getBedSpace(selectedRoom) {
+		var seaterInput = document.getElementById("seater");
+		var feeInput = document.getElementById("fpm");
+		
+		// make AJAX request to server-side script to get the number of available bed spaces and rental fee for the selected room from the database
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var data = JSON.parse(this.responseText);
+				seaterInput.value = data.seater;
+				feeInput.value = data.fee;
+				var statusSpan = document.getElementById("room-availability-status");
+				if (data.availability == "available") {
+					statusSpan.innerHTML = "Room is available";
+					statusSpan.style.color = "green";
+				} else {
+					statusSpan.innerHTML = "Room is not available";
+					statusSpan.style.color = "red";
+				}
+			}
+		};
+		xhr.open("GET", "get_bed_space.php?room=" + selectedRoom, true);
+		xhr.send();
+	}
+
+
+	////////////
+
+	<?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+// retrieve the selected room and block from the query string parameters
+if(isset($_GET["room"]) && isset($_GET["block"])) {
+    $selectedRoom = $_GET["room"];
+    $selectedBlock = $_GET["block"];
+} else {
+    die("Error: room and block parameters not found in query string.");
+}
+
+// connect to the database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hostel";
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// check for errors in database connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// prepare and execute the SQL statement
+$sql = "SELECT seater, fees FROM $selectedBlock WHERE room_no = ? AND block = ?";
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Error preparing statement: " . $conn->error);
+}
+$stmt->bind_param("ss", $selectedRoom, $selectedBlock);
+if (!$stmt->execute()) {
+    die("Error executing statement: " . $stmt->error);
+}
+
+// retrieve and display the result
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $bedSpace = $row["seater"];
+    $fee = $row["fees"];
+    echo "Bed space: " . $bedSpace . "<br>";
+    echo "Fee: " . $fee . "<br>";
+} else {
+    echo "No data found for selected room in selected block.";
+}
+
+$stmt->close();
+$conn->close();
+?>
+
+
+///// working select hostel code to show rooms //////////
+
+// function to get the available rooms for a selected block
+	function getRooms(selectedBlock) {
+		// create new XMLHttpRequest object
+		var xhr = new XMLHttpRequest();
+		// handle response
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var rooms = JSON.parse(this.responseText);
+				if (rooms.length > 0) {
+					// clear previous options
+					document.getElementById("room").innerHTML = "";
+					// add new options
+					for (var i = 0; i < rooms.length; i++) {
+						var option = document.createElement("option");
+						option.value = rooms[i].room_number;
+						option.text = rooms[i].room_number;
+						document.getElementById("room").appendChild(option);
+					}
+					document.getElementById("room-availability-status").innerHTML = "";
+				} else {
+					document.getElementById("room").innerHTML = "";
+					var option = document.createElement("option");
+					option.text = "No rooms available in this block";
+					document.getElementById("room").appendChild(option);
+					document.getElementById("room-availability-status").innerHTML = "No rooms available in this block";
+				}
+			}
+		};
+		// send request to server-side script
+		xhr.open("GET", "get_rooms.php?block=" + selectedBlock, true);
+		xhr.send();
+	}
+
+/////////////////////////the get_rooms.php ////////////////////
+
+<?php
+// retrieve the selected block from the query string parameter
+$selectedBlock = $_GET["block"];
+
+// connect to the database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hostel";
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// check for errors in database connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// execute query to retrieve rooms for selected block
+// Define the SQL query with placeholders for parameters
+$sql = "SELECT room_no, seater, fees FROM $selectedBlock";
+
+// Prepare the statement
+$stmt = $conn->prepare($sql);
+
+// Bind any necessary parameters
+// (none are needed in this case)
+
+// Execute the statement
+if (!$stmt->execute()) {
+    die("Query failed: " . $stmt->error);
+}
+
+// Get the result set
+$result = $stmt->get_result();
+
+// create array of room objects from query result
+$rooms = array();
+while ($row = $result->fetch_assoc()) {
+    $room = array(
+        "room_number" => $row["room_no"],
+        "beds" => $row["seater"],
+        "rent" => $row["fees"]
+    );
+    array_push($rooms, $room);
+}
+
+// encode array as JSON object and send response
+echo json_encode($rooms);
+
+// close statement and database connection
+$stmt->close();
+$conn->close();
+
+?>
+
+
+/////// SUSPECTED CODE FOR THE BED SPACE ///////////
+
+<?php
+// Connect to database
+$conn = new mysqli("localhost", "username", "password", "database_name");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Get selected hostel name and room number from AJAX request
+$hostel = $_POST['hostel'];
+$room = $_POST['room'];
+
+// Prepare and execute query to get bed space for selected hostel and room
+$stmt = $conn->prepare("SELECT * FROM $hostel WHERE room_number = ?");
+$stmt->bind_param("s", $room);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Build array of bed space
+$bed_space = array();
+while ($row = $result->fetch_assoc()) {
+    $bed_space[] = $row;
+}
+
+// Return JSON response with bed space
+echo json_encode($bed_space);
+
+// Close database connection
+$stmt->close();
+$conn->close();
+?>
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+//////////////// GET ROOM CORRECT CODE ///////////////////////////////
+
+<?php
+// Connect to database
+$conn = new mysqli("localhost", "root", "", "hostel");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Get selected block name from AJAX request
+$block = $_GET['block'];
+
+// Prepare and execute query to get all rooms for selected block
+$stmt = $conn->prepare("SELECT room_no FROM $block");
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Build array of rooms
+$rooms = array();
+while ($row = $result->fetch_assoc()) {
+    $rooms[] = $row['room_no'];
+}
+
+// Return JSON response with rooms
+header('Content-Type: application/json');
+echo json_encode($rooms);
+
+// Close database connection
+$stmt->close();
+$conn->close();
+?>

@@ -7,13 +7,12 @@ check_login();
 if(isset($_GET['del']))
 {
 	$id=intval($_GET['del']);
-	$adn="delete from registration where regNo=?";//change to id
+	$adn="delete from blocka where id=?";
 		$stmt= $mysqli->prepare($adn);
 		$stmt->bind_param('i',$id);
         $stmt->execute();
         $stmt->close();	   
-
-
+        echo "<script>alert('Data Deleted');</script>" ;
 }
 ?>
 <!doctype html>
@@ -35,18 +34,6 @@ if(isset($_GET['del']))
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
-<script language="javascript" type="text/javascript">
-var popUpWin=0;
-function popUpWindow(URLStr, left, top, width, height)
-{
- if(popUpWin)
-{
-if(!popUpWin.closed) popUpWin.close();
-}
-popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
-}
-</script>
-
 </head>
 
 <body>
@@ -58,7 +45,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="page-title" style="margin-top:4%">Manage Registred Students</h2>
+						<h2 class="page-title" style="margin-top: 4%">Manage Block A Rooms</h2>
 						<div class="panel panel-default">
 							<div class="panel-heading">All Room Details</div>
 							<div class="panel-body">
@@ -66,33 +53,30 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 									<thead>
 										<tr>
 											<th>Sno.</th>
-											<th>Student Name</th>
-											<th>Matric no</th>
-											<th>Contact no </th>
-											<th>room no  </th>
-											<th>Bed Space </th>
-											<th>Resumption</th>
-											<th>Level</th>
+										
+											<th>Bed Space</th>
+											<th>Room No.</th>
+											<th>Room Fee </th>
+
+											<th>Posting Date  </th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 											<th>Sno.</th>
-											<th>Student Name</th>
-											<th>Matric no</th>
-											<th>Contact no </th>
-											<th>Room no  </th>
-											<th>Bed Space </th>
-											<th>Resumpton </th>
-											<th>Level</th>
+											<th>Bed Space</th>
+											<th>Room No.</th>
+										
+											<th>Room Fee </th>
+											<th>Posting Date  </th>
 											<th>Action</th>
 										</tr>
 									</tfoot>
 									<tbody>
 <?php	
 $aid=$_SESSION['id'];
-$ret="select * from registration";
+$ret="select * from blocka";
 $stmt= $mysqli->prepare($ret) ;
 //$stmt->bind_param('i',$aid);
 $stmt->execute() ;//ok
@@ -102,16 +86,12 @@ while($row=$res->fetch_object())
 	  {
 	  	?>
 <tr><td><?php echo $cnt;;?></td>
-<td><?php echo $row->firstName;?><?php echo $row->middleName;?><?php echo $row->lastName;?></td>
-<td><?php echo $row->regno;?></td>
-<td><?php echo $row->contactno;?></td>
-<td><?php echo $row->roomno;?></td>
 <td><?php echo $row->seater;?></td>
-<td><?php echo $row->stayfrom;?></td>
-<td><?php echo $row->level;?></td>
-<td>
-<a href="student-details.php?regno=<?php echo $row->regno;?>" title="View Full Details"><i class="fa fa-desktop"></i></a>&nbsp;&nbsp;
-<a href="manage-students.php?del=<?php echo $row->regno;?>" title="Delete Record" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
+<td><?php echo $row->room_no;?></td>
+<td><?php echo $row->fees;?></td>
+<td><?php echo $row->posting_date;?></td>
+<td><a href="edit-room-A.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+<a href="manage-rooms-A.php?del=<?php echo $row->id;?>" onclick="return confirm("Do you want to delete");"><i class="fa fa-close"></i></a></td>
 										</tr>
 									<?php
 $cnt=$cnt+1;

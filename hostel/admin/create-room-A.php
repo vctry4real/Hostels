@@ -60,16 +60,23 @@ echo"<script>alert('Room has been added successfully');</script>";
 				<div class="row">
 					<div class="col-md-12">
 					
-						<h2 class="page-title">Add a Room </h2>
+						<h2 class="page-title">Add a Room To Block A </h2>
 	
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
-									<div class="panel-heading">Add a Room</div>
+									<div class="panel-heading">Add a Room </div>
 									<div class="panel-body">
 									<?php if(isset($_POST['submit']))
 { ?>
-<p style="color: red"><?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg']=""); ?></p>
+<?php 
+    if(isset($_SESSION['msg'])) {
+?>
+        <p style="color: red"><?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg']=""); ?></p>
+<?php 
+    } 
+?>
+
 <?php } ?>
 										<form method="post" class="form-horizontal">
 											

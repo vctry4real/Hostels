@@ -68,8 +68,8 @@ $stmt->bind_result($count);
 $stmt->fetch();
 $stmt->close();
 if($count>0)
-echo "<span style='color:red'>$count Seats already full.</span>";
+echo "<span style='color:red'>$count Room already full.</span>";
 else
-	echo "<span style='color:red'>All Seats are Available</span>";
+	echo "<span style='color:red'>Room still vacant </span>";
 }
 ?>

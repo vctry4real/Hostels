@@ -30,7 +30,9 @@
             $stayfrom = $row['stayfrom'];
             $duration = $row['duration'];
             $course = $row['course'];
+            $level = $row['level'];
             $regno = $row['regno'];
+            $hostel = $row['hostel'];
             $roomno = $row['roomno'];
             $gender = $row['gender'];
             $contactno = $row['contactno'];
@@ -48,7 +50,7 @@
         }
 
         // Insert data into the registration table
-        $sql = "INSERT INTO registration (firstName, lastName, emailid, seater, feespm, middleName, stayfrom, duration, course, regno, roomno, gender, contactno, egycontactno, guardianName, guardianRelation, guardianContactno, corresAddress, corresCIty, corresState, pmntAddress, pmntCity, pmnatetState) VALUES ('$firstname','$lastname','$emailid','$bedspace', '$feespm','$middlename','$stayfrom','$duration','$course','$regno','$roomno','$gender','$contactno','$emcntno','$gurname','$gurrelation','$gurcntno','$caddress','$ccity','$cstate','$paddress','$pcity','$pstate')";
+        $sql = "INSERT INTO registration (firstName, lastName, emailid, seater, feespm, middleName, stayfrom, duration, course, level, regno, hostel, roomno, gender, contactno, egycontactno, guardianName, guardianRelation, guardianContactno, corresAddress, corresCIty, corresState, pmntAddress, pmntCity, pmnatetState) VALUES ('$firstname','$lastname','$emailid','$bedspace', '$feespm','$middlename','$stayfrom','$duration','$course','$level','$regno','$hostel','$roomno','$gender','$contactno','$emcntno','$gurname','$gurrelation','$gurcntno','$caddress','$ccity','$cstate','$paddress','$pcity','$pstate')";
 
         if ($conn->query($sql) === TRUE) {
             echo "Accepted successfully";
